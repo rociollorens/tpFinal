@@ -30,7 +30,8 @@ public class ARNToADN {
 	         if (!m.matches()) 
 	         {  
 	        	  pilaDeInvalidos.push(cur);
-	        	 }else
+	         }
+	         else
 	         {
 	        	 ARN.add(cur);
 	         }
@@ -41,10 +42,6 @@ public class ARNToADN {
 	     chequearGen(ADN);
 	     
 	}
-
-
-	
-	
 	     
 	//Busco complemento/inverso de ARN y lo pongo en lista
 	public List<String> complementoADN(List<String> ARN)
@@ -84,29 +81,6 @@ public class ARNToADN {
 	 		 }	
 	 		return inverso;
 	 	}
-
-//	private LinkedList<String> chequearGen(LinkedList<String> ADN) 
-//	{
-//		String regexp = "ATG([ACGT]{3})+(TAA|TAG|TGA)";
-//	    Pattern gen = Pattern.compile(regexp);
-//	    List<String> GEN = new LinkedList<String>();
-//	    Queue<String> cola = new LinkedList<String>();
-//	     
-//	     for (int i = 0 ; i < ADN.size() ; ++i) 
-//	     {
-//	    	 String cur = ADN.get(i);
-//	         Matcher m = gen.matcher(cur);
-//	         if (!m.matches()) 
-//	         { 
-//	        	 cola.add(cur); 
-//	         }
-//	         else
-//	         {
-//	        	 GEN.add(cur);
-//	         }
-//	      }
-//	     copiarCola(cola);
-//	}
 	     
 	 	//Pongo genes en "listaGenes"
 	    private List<String> chequearGen(List<String> listaADN) 
