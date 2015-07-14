@@ -11,12 +11,28 @@ public class PlainTextConsole {
     
 	static ARNToADN aux = new ARNToADN();
 	
+	
+	public static void testOpciones() {
+		 List<String> sequences = new LinkedList<>();
+		 sequences.add("ADCGUU");
+		 sequences.add("ADCGACUUAAUU");
+		 sequences.add("ADCGUAAUGCU");
+		 sequences.add("ACGUACGUACGU");
+		 sequences.add("ACGGGACCUUUU");
+		 sequences.add("AGGCUUAUCGACCC");
+		 option1(sequences);
+		 option2();
+		 option3();
+		 option4();
+	}
+	
     public static void option1(List<String> sequences) {
            aux.comprobanteARN(sequences);
     }
     
     public static void option2() {
         List<String> ADNC = aux.getADN();
+        System.out.println("Imprimiendo las secuencias validas (Opcion 2)");
         for(int i = 0; i < ADNC.size(); i++ ){
         	System.out.println(ADNC.get(i));
         }
@@ -24,6 +40,7 @@ public class PlainTextConsole {
     
     public static void option3() {
         Queue<String> noGenes =  aux.getColaDeNoGenes();
+        System.out.println("Imprimiendo las secuencias inv‡lidas (Opcion 3)");
         while(!noGenes.isEmpty()){
         	System.out.println(noGenes.poll());
         }
@@ -31,6 +48,7 @@ public class PlainTextConsole {
     
     public static void option4() {
         Stack<String> invalidos = aux.getPilaDeInvalidos();
+        System.out.println("Imprimiendo las secuencias inv‡lidas inversas  (Opcion 4)");
         while(!invalidos.isEmpty()){
         	System.out.println(invalidos.pop());
         }
@@ -39,9 +57,10 @@ public class PlainTextConsole {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in); //Scanner para obtener el input del usuario
 
-        sc.useDelimiter(Pattern.compile("\n")); //Setea el ENTER como fin de linea para el input del usuario
+        sc.useDelimiter(Pattern.compile("\r\n")); //Setea el ENTER como fin de linea para el input del usuario
         
-        String saludo = "Hola Mundo!"; //Defino un saludo a imprimir
+        
+     //   testOpciones();
      
         System.out.println("Bienvenidos al TP Final de 71.44!!"); //Mensaje de bienvenida
 

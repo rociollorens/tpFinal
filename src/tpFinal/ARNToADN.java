@@ -74,7 +74,7 @@ public class ARNToADN {
 	 		    Stack<String> pilaC = new Stack<String>();
 	 			for (int j=0; j< cur.length(); j++)
 	 			{
-	 				String c = cur.substring(j, j++);
+	 				String c = cur.substring(j, j+1);
 	 				
 	 				if(c.equals("A"))
 	 				{
