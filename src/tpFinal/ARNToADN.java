@@ -7,16 +7,16 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import tpFinal.auxiliar;
 
 public class ARNToADN {
-	List<String> ADN = new LinkedList<String>();
-	List<String> lista = new LinkedList<String>();
-	List<String> ARN = new LinkedList<String>();
-	List<String> listaADN = new LinkedList<String>();
-	List<String> complementoADN = new LinkedList<String>();
+	private List<String> ADN = new LinkedList<String>();
+	private List<String> ARN = new LinkedList<String>();
 	private Stack<String> pilaDeInvalidos = new Stack<String>();
-			
+	private arbolBinarioAlfabetico arbolDeGenes = new arbolBinarioAlfabetico();
+
+	private Queue<String> colaDeNoGenes = new LinkedList<String>();
+	
+	
 	public void comprobanteARN(List<String> lista) 
 	{	 
 		 String regexp = "[ACGU]+";
@@ -39,7 +39,7 @@ public class ARNToADN {
 	     
 	     
 	     ADN = complementoADN(ARN); 
-	     chequearGen(ADN);
+	      chequearGen(ADN);
 	     
 	}
 	     
@@ -83,43 +83,27 @@ public class ARNToADN {
 	 	}
 	     
 	 	//Pongo genes en "listaGenes"
-	    private List<String> chequearGen(List<String> listaADN) 
+	    private void chequearGen(List<String> listaADN) 
 		{
 			String regexpGEN = "ATG([ACGT]{3})+(TAA|TAG|TGA)";
 		    Pattern gen = Pattern.compile(regexpGEN);
-		    List<String> listaGenes = new LinkedList<String>();
-		     
+		    arbolDeGenes = new arbolBinarioAlfabetico();
+		     colaDeNoGenes = new LinkedList<String>();
 		    for (int i = 0 ; i < listaADN.size() ; ++i) 
 		    {
 		    	String cur = listaADN.get(i);
 		        Matcher m = gen.matcher(cur);
 		        if (m.matches()) 
 		        { 
-		        	listaGenes.add(cur); 
+		        	arbolDeGenes.agregar(cur); 
+		        } else {
+		        	colaDeNoGenes.add(cur);
 		        }
 		    }
-		    return listaGenes; 
+		    
 		}
 		
-	    //Encolo ADN que no es gen
-		private Queue<String> filtroCola(List<String> listaADNc) 
-		{
-			String regexpGENc = "ATG([ACGT]{3})+(TAA|TAG|TGA)";
-			Pattern gen = Pattern.compile(regexpGENc);
-			Queue<String> cola = new LinkedList<String>();
-			     
-			for (int i = 0 ; i < listaADNc.size() ; ++i) 
-			{
-				String cur = listaADNc.get(i);
-			    Matcher m = gen.matcher(cur);
-			    if (!m.matches()) 
-			    {
-			    	cola.add(cur); 
-			    }
-			 }
-			
-			return cola;
-		}	
+	
 		
 		
 		
