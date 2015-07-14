@@ -42,7 +42,29 @@ public class ARNToADN {
 	     chequearGen(ADN);
 	     
 	}
+
+	private List<String> chequearGen(LinkedList<String> ADN) 
+	{
+		String regexp = "ATG([ACGT]{3})+(TAA|TAG|TGA)";
+	    Pattern gen = Pattern.compile(regexp);
+	    List<String> GEN = new LinkedList<String>();
+	    Queue<String> cola = new LinkedList<String>();
 	     
+	     for (int i = 0 ; i < ADN.size() ; ++i) 
+	     {
+	    	 String cur = ADN.get(i);
+	         Matcher m = gen.matcher(cur);
+	         if (!m.matches()) 
+	         { 
+	        	 cola.add(cur); 
+	         }
+	         else
+	         {
+	        	 GEN.add(cur);
+	         }
+	      }
+	}  
+	
 	//Busco complemento/inverso de ARN y lo pongo en lista
 	public List<String> complementoADN(List<String> ARN)
 	{	
@@ -81,26 +103,8 @@ public class ARNToADN {
 	 		 }	
 	 		return inverso;
 	 	}
+
 	     
-	 	//Pongo genes en "listaGenes"
-	    private List<String> chequearGen(List<String> listaADN) 
-		{
-			String regexpGEN = "ATG([ACGT]{3})+(TAA|TAG|TGA)";
-		    Pattern gen = Pattern.compile(regexpGEN);
-		    List<String> listaGenes = new LinkedList<String>();
-		     
-		    for (int i = 0 ; i < listaADN.size() ; ++i) 
-		    {
-		    	String cur = listaADN.get(i);
-		        Matcher m = gen.matcher(cur);
-		        if (m.matches()) 
-		        { 
-		        	listaGenes.add(cur); 
-		        }
-		    }
-		    return listaGenes; 
-		}
-		
 	    //Encolo ADN que no es gen
 		private Queue<String> filtroCola(List<String> listaADNc) 
 		{
