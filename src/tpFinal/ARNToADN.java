@@ -17,6 +17,27 @@ public class ARNToADN {
 	private Queue<String> colaDeNoGenes = new LinkedList<String>();
 	
 	
+	
+	public List<String> getADN() {
+		return ADN;
+	}
+
+	public List<String> getARN() {
+		return ARN;
+	}
+
+	public Stack<String> getPilaDeInvalidos() {
+		return pilaDeInvalidos;
+	}
+
+	public arbolBinarioAlfabetico getArbolDeGenes() {
+		return arbolDeGenes;
+	}
+
+	public Queue<String> getColaDeNoGenes() {
+		return colaDeNoGenes;
+	}
+
 	public void comprobanteARN(List<String> lista) 
 	{	 
 		 String regexp = "[ACGU]+";

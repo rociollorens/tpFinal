@@ -2,25 +2,38 @@ package tpFinal;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 public class PlainTextConsole {
     
+	static ARNToADN aux = new ARNToADN();
+	
     public static void option1(List<String> sequences) {
-        //Implementar este metodo y los metodos que sean necesarios
+           aux.comprobanteARN(sequences);
     }
     
     public static void option2() {
-        //Implementar este metodo y los metodos que sean necesarios
+        List<String> ADNC = aux.getADN();
+        for(int i = 0; i < ADNC.size(); i++ ){
+        	System.out.println(ADNC.get(i));
+        }
     }
     
     public static void option3() {
-        //Implementar este metodo y los metodos que sean necesarios
+        Queue<String> noGenes =  aux.getColaDeNoGenes();
+        while(!noGenes.isEmpty()){
+        	System.out.println(noGenes.poll());
+        }
     }
     
     public static void option4() {
-        //Implementar este metodo y los metodos que sean necesarios
+        Stack<String> invalidos = aux.getPilaDeInvalidos();
+        while(!invalidos.isEmpty()){
+        	System.out.println(invalidos.pop());
+        }
     }
     
     public static void main(String[] args) {
