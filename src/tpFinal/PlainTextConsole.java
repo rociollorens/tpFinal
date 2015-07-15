@@ -30,16 +30,39 @@ public class PlainTextConsole {
            aux.comprobanteARN(sequences);
     }
     
+    public static boolean avisarSiNoHaySecuenias() {
+    	if(aux.getSecuenciasIngresadas()==null || aux.getSecuenciasIngresadas().isEmpty())
+    	{
+    		System.out.println("No se ingresaron secuencias en la opción 1");
+    		return true;
+    	}
+    	return false;
+    }
+    
     public static void option2() {
-        List<String> ADNC = aux.getADN();
-        System.out.println("Imprimiendo las secuencias validas (Opcion 2)");
-        for(int i = 0; i < ADNC.size(); i++ ){
-        	System.out.println(ADNC.get(i));
+    	if(avisarSiNoHaySecuenias())return;
+    	List<String> cDNA = aux.getADN();
+    	if(cDNA.isEmpty()) {
+    		System.out.println("No hay secuencias válidas");
+    		return;
+    	}
+        System.out.println("Imprimiendo las secuencias validas en formato cDNA (Opcion 2)");
+        for(int i = 0; i < cDNA.size(); i++ ){
+        	String posibleGen = cDNA.get(i);
+        	if(aux.esGen(posibleGen))
+        		System.out.println(posibleGen);
         }
     }
     
     public static void option3() {
-        Queue<String> noGenes =  aux.getColaDeNoGenes();
+    	if(avisarSiNoHaySecuenias())return;
+    	Queue<String> noGenes = new LinkedList<>();
+    	
+    	noGenes.addAll(aux.getColaSecuenciasNoGenes());
+        if(noGenes.isEmpty()) {
+    		System.out.println("No hay secuencias inválidas que respeten el lenguaje {A, C, G, U}");
+    		return;
+    	}
         System.out.println("Imprimiendo las secuencias inválidas (Opcion 3)");
         while(!noGenes.isEmpty()){
         	System.out.println(noGenes.poll());
@@ -47,8 +70,14 @@ public class PlainTextConsole {
     }
     
     public static void option4() {
-        Stack<String> invalidos = aux.getPilaDeInvalidos();
-        System.out.println("Imprimiendo las secuencias inválidas inversas  (Opcion 4)");
+    	if(avisarSiNoHaySecuenias())return;
+        Stack<String> invalidos = new Stack<>();
+        invalidos.addAll(aux.getPilaDeInvalidos());
+        if(invalidos.isEmpty()) {
+    		System.out.println("No hay secuencias inválidas que respeten no el lenguaje {A, C, G, U}");
+    		return;
+    	}
+        System.out.println("Imprimiendo las secuencias inválidas en orden inverso  (Opcion 4)");
         while(!invalidos.isEmpty()){
         	System.out.println(invalidos.pop());
         }
@@ -76,6 +105,8 @@ public class PlainTextConsole {
             
             if (opcion.equalsIgnoreCase("1")) { //eliji� la opci�n 1
             	 List<String> sequences = new LinkedList<>();
+            	 System.out.println("Ingrese las secuencias ARN (una por linea):");
+            	 System.out.println("");
                 while (true) {
                     String sequence = sc.next(); //Lee una linea de input del usuario
                     if (sequence.equalsIgnoreCase("q")) {
@@ -94,7 +125,7 @@ public class PlainTextConsole {
             } else if (opcion.equalsIgnoreCase("q")) {
                 break;
             } else {
-                System.out.println("No ingres� una opci�n correcta");
+                System.out.println("No ingresó una opción correcta");
             }
         }
         
