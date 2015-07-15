@@ -60,7 +60,7 @@ public class ARNToADN {
 	     
 	     
 	     ADN = complementoADN(ARN); 
-	      chequearGen(ADN);
+	     chequearGen(ADN);
 	     
 	}
 	     
@@ -121,13 +121,7 @@ public class ARNToADN {
 		        	colaDeNoGenes.add(cur);
 		        }
 		    }
-		    
 		}
-		
-	
-		
-		
-		
 		
 }
 	

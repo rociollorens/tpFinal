@@ -1,5 +1,8 @@
 package tpFinal;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class arbolBinarioAlfabetico {
 	private arbolBinarioAlfabetico izq;
 	private arbolBinarioAlfabetico der;
@@ -53,6 +56,16 @@ public class arbolBinarioAlfabetico {
 		if(der != null){
 			der.imprimir();
 		}	
+	}
+	
+	public List<String> list() {
+		List<String> l = new LinkedList<>();
+		if(izq!=null)
+			l.addAll(izq.list());
+		l.add(secuencia);
+		if(der!=null)
+			l.addAll(der.list());
+		return l;
 	}
 	
 	

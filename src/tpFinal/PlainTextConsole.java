@@ -40,7 +40,7 @@ public class PlainTextConsole {
     
     public static void option3() {
         Queue<String> noGenes =  aux.getColaDeNoGenes();
-        System.out.println("Imprimiendo las secuencias inválidas (Opcion 3)");
+        System.out.println("Imprimiendo las secuencias inv√°lidas (Opcion 3)");
         while(!noGenes.isEmpty()){
         	System.out.println(noGenes.poll());
         }
@@ -48,7 +48,7 @@ public class PlainTextConsole {
     
     public static void option4() {
         Stack<String> invalidos = aux.getPilaDeInvalidos();
-        System.out.println("Imprimiendo las secuencias inválidas inversas  (Opcion 4)");
+        System.out.println("Imprimiendo las secuencias inv√°lidas inversas  (Opcion 4)");
         while(!invalidos.isEmpty()){
         	System.out.println(invalidos.pop());
         }
@@ -57,27 +57,26 @@ public class PlainTextConsole {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in); //Scanner para obtener el input del usuario
 
-        sc.useDelimiter(Pattern.compile("\r\n")); //Setea el ENTER como fin de linea para el input del usuario
-        
-        
+        sc.useDelimiter(Pattern.compile("\r?\n")); //Setea el ENTER como fin de linea para el input del usuario   
+        										   //Funciona en windows y en linux
      //   testOpciones();
      
         System.out.println("Bienvenidos al TP Final de 71.44!!"); //Mensaje de bienvenida
 
         while(true) {
-            //Imprimimos el menú ante cada input del usuario
-            System.out.println("\tMenú del programa:");
-            System.out.println("\tIngrese 1 para comenzar a ingresar secuencias de nucleótidos separadas por la tecla ENTER. Al finalizar, ingrese q o Q seguido de ENTER");
-            System.out.println("\tIngrese 2 para imprimir en pantalla todas las secuencias válidas ingresadas previa conversión mediante complemento y reversa.");
-            System.out.println("\tIngrese 3 para imprimir en pantalla todas las secuencias inválidas en pantalla en el mismo orden en que fueron ingresadas por el usuario.");
-            System.out.println("\tIngrese 4 para imprimir en pantalla todas las secuencias inválidas y que no están en formato de código genético en el orden inverso al que las ingresó el usuario.");
+            //Imprimimos el menÔøΩ ante cada input del usuario
+            System.out.println("\tMen√∫ del programa:");
+            System.out.println("\tIngrese 1 para comenzar a ingresar secuencias de nucle√≥tidos separadas por la tecla ENTER. Al finalizar, ingrese q o Q seguido de ENTER");
+            System.out.println("\tIngrese 2 para imprimir en pantalla todas las secuencias v√°lidas ingresadas previa conversi√≥n mediante complemento y reversa.");
+            System.out.println("\tIngrese 3 para imprimir en pantalla todas las secuencias inv√°lidas en pantalla en el mismo orden en que fueron ingresadas por el usuario.");
+            System.out.println("\tIngrese 4 para imprimir en pantalla todas las secuencias inv√°lidas y que no est√©n en formato de c√≥digo gen√©tico en el orden inverso al que las ingres√≥ el usuario.");
             System.out.println("\tIngrese Q para salir.");
 
             String opcion = sc.next(); //Lee una linea de input del usuario
             
-            if (opcion.equalsIgnoreCase("1")) { //elijió la opción 1
+            if (opcion.equalsIgnoreCase("1")) { //elijiÔøΩ la opciÔøΩn 1
+            	 List<String> sequences = new LinkedList<>();
                 while (true) {
-                    List<String> sequences = new LinkedList<>();
                     String sequence = sc.next(); //Lee una linea de input del usuario
                     if (sequence.equalsIgnoreCase("q")) {
                         option1(sequences);
@@ -95,7 +94,7 @@ public class PlainTextConsole {
             } else if (opcion.equalsIgnoreCase("q")) {
                 break;
             } else {
-                System.out.println("No ingresó una opción correcta");
+                System.out.println("No ingresÔøΩ una opciÔøΩn correcta");
             }
         }
         
