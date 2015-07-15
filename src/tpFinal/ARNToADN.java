@@ -65,6 +65,26 @@ public class ARNToADN {
 	     }	
 	    complementoADN(ARN); 
 	}
+	
+	public String getcDNA(String ARN) {
+		Stack<String> pilaC = new Stack<String>();
+		for (int j=0; j< ARN.length(); j++)
+		{
+			String c = ARN.substring(j, j+1);
+			
+			if (c.equals("A"))	pilaC.push("T");
+			if (c.equals("C"))	pilaC.push("G");
+			if (c.equals("G"))	pilaC.push("C");
+			if (c.equals("U"))	pilaC.push("A");
+		}
+		
+		String inv="";
+		while(!pilaC.isEmpty())
+		{
+			inv= inv.concat(pilaC.pop());
+		}
+		return inv;
+	}
 	     
 	//Busco complemento/inverso de ARN y lo pongo en lista
 	public void complementoADN(List<String> ARN)
@@ -73,42 +93,13 @@ public class ARNToADN {
 	 	colaSecuenciasNoGenes = new LinkedList<>();
 	 	for (int i = 0 ; i < ARN.size() ; ++i) 
 	 	{	
-	 		    String cur = ARN.get(i);
-	 		    Stack<String> pilaC = new Stack<String>();
-	 			for (int j=0; j< cur.length(); j++)
-	 			{
-	 				String c = cur.substring(j, j+1);
-	 				
-	 				if(c.equals("A"))
-	 				{
-	 					pilaC.push("T");
-	 				}
-	 				if (c.equals("C"))
-	 				{
-	 					pilaC.push("G");
-	 				}
-	 				if (c.equals("G"))
-	 				{
-	 					pilaC.push("C");
-	 				}
-	 				if (c.equals("U"))
-	 				{
-	 					pilaC.push("A");
-	 				}	
-	 			}
-	 			
-	 			String inv="";
-	 			while(!pilaC.isEmpty())
-	 			{
-	 				inv= inv.concat(pilaC.pop());
-	 			}
-	 			if(!esGen(inv))
- 					colaSecuenciasNoGenes.add(cur);
-	 			arbolSecuenciasADN.agregar(inv);
-	 			//inverso.add(inv);
-	 		 }	
-	 		//return inverso;
-	 	}
+ 		    String cur = ARN.get(i);
+ 		    String inv = getcDNA(cur);
+ 			if(!esGen(inv))
+				colaSecuenciasNoGenes.add(cur);
+ 			arbolSecuenciasADN.agregar(inv);
+	 	}	
+	 }
 	
 		public boolean esGen(String secuencia) {
 			String regexpGEN = "ATG([ACGT]{3})+(TAA|TAG|TGA)";

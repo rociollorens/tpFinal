@@ -65,7 +65,9 @@ public class PlainTextConsole {
     	}
         System.out.println("Imprimiendo las secuencias inválidas (Opcion 3)");
         while(!noGenes.isEmpty()){
-        	System.out.println(noGenes.poll());
+        	String arn = noGenes.poll();
+        	String adn = aux.getcDNA(arn);
+        	System.out.println( arn + "(ADN: "+adn+")");
         }
     }
     
