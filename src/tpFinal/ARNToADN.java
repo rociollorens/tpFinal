@@ -9,17 +9,18 @@ import java.util.regex.Pattern;
 
 
 public class ARNToADN {
-	private List<String> ADN = new LinkedList<String>();
+	
+	private List<String> secuenciasIngresadas;
+	
+	private arbolBinarioAlfabetico arbolSecuenciasADN = new arbolBinarioAlfabetico();
 	private List<String> ARN = new LinkedList<String>();
 	private Stack<String> pilaDeInvalidos = new Stack<String>();
-	private arbolBinarioAlfabetico arbolDeGenes = new arbolBinarioAlfabetico();
-
-	private Queue<String> colaDeNoGenes = new LinkedList<String>();
 	
+	private Queue<String> colaSecuenciasNoGenes = new LinkedList<String>();
 	
 	
 	public List<String> getADN() {
-		return ADN;
+		return arbolSecuenciasADN.list();
 	}
 
 	public List<String> getARN() {
@@ -30,16 +31,21 @@ public class ARNToADN {
 		return pilaDeInvalidos;
 	}
 
-	public arbolBinarioAlfabetico getArbolDeGenes() {
-		return arbolDeGenes;
+	public arbolBinarioAlfabetico getArbolSecuenciasADN() {
+		return arbolSecuenciasADN;
 	}
 
-	public Queue<String> getColaDeNoGenes() {
-		return colaDeNoGenes;
+	public Queue<String> getColaSecuenciasNoGenes() {
+		return colaSecuenciasNoGenes;
+	}
+
+	public List<String> getSecuenciasIngresadas() {
+		return secuenciasIngresadas;
 	}
 
 	public void comprobanteARN(List<String> lista) 
 	{	 
+		secuenciasIngresadas = lista;
 		 String regexp = "[ACGU]+";
 	     Pattern p = Pattern.compile(regexp);
 	     ARN = new LinkedList<String>();
@@ -56,79 +62,51 @@ public class ARNToADN {
 	         {
 	        	 ARN.add(cur);
 	         }
-	      }	
-	     
-	     
-	     ADN = complementoADN(ARN); 
-	      chequearGen(ADN);
-	     
+	     }	
+	    complementoADN(ARN); 
+	}
+	
+	public String getcDNA(String ARN) {
+		Stack<String> pilaC = new Stack<String>();
+		for (int j=0; j< ARN.length(); j++)
+		{
+			String c = ARN.substring(j, j+1);
+			
+			if (c.equals("A"))	pilaC.push("T");
+			if (c.equals("C"))	pilaC.push("G");
+			if (c.equals("G"))	pilaC.push("C");
+			if (c.equals("U"))	pilaC.push("A");
+		}
+		
+		String inv="";
+		while(!pilaC.isEmpty())
+		{
+			inv= inv.concat(pilaC.pop());
+		}
+		return inv;
 	}
 	     
 	//Busco complemento/inverso de ARN y lo pongo en lista
-	public List<String> complementoADN(List<String> ARN)
+	public void complementoADN(List<String> ARN)
 	{	
-	 	List<String> inverso = new LinkedList<String>();
+	 	arbolSecuenciasADN =  new arbolBinarioAlfabetico();
+	 	colaSecuenciasNoGenes = new LinkedList<>();
 	 	for (int i = 0 ; i < ARN.size() ; ++i) 
 	 	{	
-	 		    String cur = ARN.get(i);
-	 		    Stack<String> pilaC = new Stack<String>();
-	 			for (int j=0; j< cur.length(); j++)
-	 			{
-	 				String c = cur.substring(j, j+1);
-	 				
-	 				if(c.equals("A"))
-	 				{
-	 					pilaC.push("T");
-	 				}
-	 				if (c.equals("C"))
-	 				{
-	 					pilaC.push("G");
-	 				}
-	 				if (c.equals("G"))
-	 				{
-	 					pilaC.push("C");
-	 				}
-	 				if (c.equals("U"))
-	 				{
-	 					pilaC.push("A");
-	 				}	
-	 			}
-	 			String inv="";
-	 			while(!pilaC.isEmpty())
-	 			{
-	 				inv= inv.concat(pilaC.pop());
-	 			}
-	 			inverso.add(inv);
-	 		 }	
-	 		return inverso;
-	 	}
-	     
-	 	//Pongo genes en "listaGenes"
-	    private void chequearGen(List<String> listaADN) 
-		{
+ 		    String cur = ARN.get(i);
+ 		    String inv = getcDNA(cur);
+ 			if(!esGen(inv))
+				colaSecuenciasNoGenes.add(cur);
+ 			arbolSecuenciasADN.agregar(inv);
+	 	}	
+	 }
+	
+		public boolean esGen(String secuencia) {
 			String regexpGEN = "ATG([ACGT]{3})+(TAA|TAG|TGA)";
 		    Pattern gen = Pattern.compile(regexpGEN);
-		    arbolDeGenes = new arbolBinarioAlfabetico();
-		     colaDeNoGenes = new LinkedList<String>();
-		    for (int i = 0 ; i < listaADN.size() ; ++i) 
-		    {
-		    	String cur = listaADN.get(i);
-		        Matcher m = gen.matcher(cur);
-		        if (m.matches()) 
-		        { 
-		        	arbolDeGenes.agregar(cur); 
-		        } else {
-		        	colaDeNoGenes.add(cur);
-		        }
-		    }
-		    
+		    Matcher m = gen.matcher(secuencia);
+	        return m.matches();
 		}
-		
-	
-		
-		
-		
-		
 }
 	
 	

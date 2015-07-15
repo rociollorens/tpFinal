@@ -1,5 +1,8 @@
 package tpFinal;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class arbolBinarioAlfabetico {
 	private arbolBinarioAlfabetico izq;
 	private arbolBinarioAlfabetico der;
@@ -26,22 +29,24 @@ public class arbolBinarioAlfabetico {
 	}
 	
 	public void agregar(String s){
-		if (secuencia.isEmpty()){
+		if (secuencia==null || secuencia.isEmpty()){
 			secuencia = s;
-		} else {
-			if (secuencia.compareTo(s)>=0){ // s es menor o igual qeu secuencia
-			  if (izq== null ){ 
-				  izq = new arbolBinarioAlfabetico();
-			  }
-			  izq.agregar(s);
+			return;
+		} 
+		
+		
+		if (secuencia.compareTo(s)>=0){ // s es menor o igual qeu secuencia
+		  if (izq== null ){ 
+			  izq = new arbolBinarioAlfabetico();
+		  }
+		  izq.agregar(s);
+		}
+		else
+		{  
+			if ( der== null ){
+				der = new arbolBinarioAlfabetico();
 			}
-			else
-			{  
-				if ( der== null ){
-					der = new arbolBinarioAlfabetico();
-				}
-				der.agregar(s);
-			}
+			der.agregar(s);
 		}
 	}
 	
@@ -53,6 +58,16 @@ public class arbolBinarioAlfabetico {
 		if(der != null){
 			der.imprimir();
 		}	
+	}
+	
+	public List<String> list() {
+		List<String> l = new LinkedList<>();
+		if(izq!=null)
+			l.addAll(izq.list());
+		l.add(secuencia);
+		if(der!=null)
+			l.addAll(der.list());
+		return l;
 	}
 	
 	
